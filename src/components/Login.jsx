@@ -2,6 +2,11 @@ import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { BG_IMAGE_URL } from "../utils/constants";
 import { validateSignin } from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -17,6 +22,45 @@ const Login = () => {
     // validate the form data
     const message = validateSignin(email.current.value, password.current.value);
     setErrorMessage(message);
+    if (message) return null;
+
+    // signin signup logic
+    if (!isSignInForm) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + " - " + errorMessage);
+          // ..
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + " - " + errorMessage);
+        });
+    }
   };
 
   return (
@@ -39,20 +83,20 @@ const Login = () => {
             type="text"
             ref={name}
             placeholder="Full name"
-            className="w-full py-2 m-2 bg-zinc-800 rounded-md"
+            className="w-full py-2 m-2 bg-zinc-800 rounded-md outline-red-500"
           />
         )}
         <input
           type="text"
           placeholder="Email"
           ref={email}
-          className="w-full py-2 m-2 bg-zinc-800 rounded-md"
+          className="w-full py-2 m-2 bg-zinc-800 rounded-md outline-red-500"
         />
         <input
           type="password"
           ref={password}
           placeholder="Password"
-          className="w-full py-2 m-2 bg-zinc-800 rounded-md"
+          className="w-full py-2 m-2 bg-zinc-800 rounded-md outline-red-500"
         />
         {errorMessage && (
           <p className="text-md font-serif font-semibold text-red-500 p-3">
