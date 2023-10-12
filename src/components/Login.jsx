@@ -1,8 +1,24 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
+import { BG_IMAGE_URL } from "../utils/constants";
+import { validateSignin } from "../utils/validate";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState();
+
+  const email = useRef(null);
+  const password = useRef(null);
+  const name = useRef(null);
+
+  const handleButtonClick = (e) => {
+    e.preventDefault();
+
+    // validate the form data
+    const message = validateSignin(email.current.value, password.current.value);
+    setErrorMessage(message);
+  };
+
   return (
     <div>
       <Header />
@@ -10,7 +26,7 @@ const Login = () => {
         <img
           className="h-screen object-cover md:object-contain md:h-auto"
           alt="hello"
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/893a42ad-6a39-43c2-bbc1-a951ec64ed6d/1d86e0ac-428c-4dfa-9810-5251dbf446f8/IN-en-20231002-popsignuptwoweeks-perspective_alpha_website_large.jpg"
+          src={BG_IMAGE_URL}
         />
       </div>
       <form className="absolute p-12 text-white bg-black w-full md:w-3/12 my-36 mx-auto right-0 left-0 bg-opacity-80">
@@ -21,6 +37,7 @@ const Login = () => {
         {!isSignInForm && (
           <input
             type="text"
+            ref={name}
             placeholder="Full name"
             className="w-full py-2 m-2 bg-zinc-800 rounded-md"
           />
@@ -28,14 +45,25 @@ const Login = () => {
         <input
           type="text"
           placeholder="Email"
+          ref={email}
           className="w-full py-2 m-2 bg-zinc-800 rounded-md"
         />
         <input
           type="password"
+          ref={password}
           placeholder="Password"
           className="w-full py-2 m-2 bg-zinc-800 rounded-md"
         />
-        <button className="text-white m-2 py-2 w-full bg-red-700 rounded-md my-6">
+        {errorMessage && (
+          <p className="text-md font-serif font-semibold text-red-500 p-3">
+            {errorMessage}
+          </p>
+        )}
+
+        <button
+          onClick={handleButtonClick}
+          className="text-white m-2 py-2 w-full bg-red-700 rounded-md my-6"
+        >
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
         <p
