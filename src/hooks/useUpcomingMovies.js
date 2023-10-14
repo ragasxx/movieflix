@@ -20,3 +20,5 @@ const useUpcomingMovies = () => {
     getUpcomingMovies();
   });
 };
+
+export default useUpcomingMovies;

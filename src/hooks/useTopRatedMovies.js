@@ -3,7 +3,7 @@ import { API_OPTIONS } from "../utils/constants";
 import { addTopRatedmovies } from "../utils/movieSlice";
 import { useEffect } from "react";
 
-const useUpcomingMovies = () => {
+const useTopRatedMovies = () => {
   const dispatch = useDispatch();
 
   const getTopRatedMovies = async () => {
@@ -20,3 +20,5 @@ const useUpcomingMovies = () => {
     getTopRatedMovies();
   });
 };
+
+export default useTopRatedMovies;
