@@ -49,18 +49,25 @@ const Header = () => {
         Movieflix
       </h1>
       {user && (
-        <div className="flex p-2 justify-between w-32">
-          <img
-            className="w-10 h-10 hidden md:block "
-            src={userIcon}
-            alt="user icon"
-          />
-          <button
-            onClick={handleSignOut}
-            className="font-bold text-white hidden md:block"
-          >
-            Sign Out
+        <div className="flex p-2 justify-between">
+          <button class="relative flex items-center justify-center p-0.5  mb-2 mx-4 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+            <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+              GPT Search
+            </span>
           </button>
+          <div className="flex">
+            <img
+              className="w-10 mx-3 h-10 hidden md:block "
+              src={userIcon}
+              alt="user icon"
+            />
+            <button
+              onClick={handleSignOut}
+              className="font-bold  text-white hidden md:block"
+            >
+              Sign Out
+            </button>
+          </div>
         </div>
       )}
     </div>
