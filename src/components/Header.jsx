@@ -40,11 +40,14 @@ const Header = () => {
   };
   return (
     <div className="absolute w-screen z-20 px-5 py-2 bg-gradient-to-b from-black flex flex-col md:flex-row justify-between">
-      <img
+      {/* <img
         className="w-40"
         alt="hello"
         src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
-      />
+      /> */}
+      <h1 className="text-white font-sans font-bold text-3xl bg-gradient-to-r from-blue-400 to-white inline-block text-transparent bg-clip-text">
+        Movieflix
+      </h1>
       {user && (
         <div className="flex p-2 justify-between w-32">
           <img
