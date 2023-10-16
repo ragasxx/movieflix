@@ -5,6 +5,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
+import { toggleGptSearchView } from "../utils/gptSlice";
 
 const Header = () => {
   const user = useSelector((store) => store.user);
@@ -38,19 +39,22 @@ const Header = () => {
         // An error happened.
       });
   };
+
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptSearchView());
+  };
+
   return (
     <div className="absolute w-screen z-20 px-5 py-2 bg-gradient-to-b from-black flex flex-col md:flex-row justify-between">
-      {/* <img
-        className="w-40"
-        alt="hello"
-        src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
-      /> */}
-      <h1 className="text-white font-sans font-bold text-3xl bg-gradient-to-r from-blue-400 to-white inline-block text-transparent bg-clip-text">
+      <h1 className="font-sans font-bold text-3xl bg-gradient-to-r from-blue-400 to-white inline-block text-transparent bg-clip-text">
         Movieflix
       </h1>
       {user && (
         <div className="flex p-2 justify-between">
-          <button class="relative flex items-center justify-center p-0.5  mb-2 mx-4 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+          <button
+            onClick={handleGptSearchClick}
+            class="relative flex items-center justify-center p-0.5  mb-2 mx-4 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800"
+          >
             <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
               GPT Search
             </span>
