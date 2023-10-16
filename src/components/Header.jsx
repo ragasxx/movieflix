@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
-import { userIcon } from "../utils/constants";
+import { SUPPORTED_LANG, userIcon } from "../utils/constants";
 import { auth } from "../utils/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { toggleGptSearchView } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const user = useSelector((store) => store.user);
+  const showGpt = useSelector((store) => store.gpt.showGptSearch);
+  const langKey = useSelector((store) => store.config.lang);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -44,6 +47,10 @@ const Header = () => {
     dispatch(toggleGptSearchView());
   };
 
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  };
+
   return (
     <div className="absolute w-screen z-20 px-5 py-2 bg-gradient-to-b from-black flex flex-col md:flex-row justify-between">
       <h1 className="font-sans font-bold text-3xl bg-gradient-to-r from-blue-400 to-white inline-block text-transparent bg-clip-text">
@@ -51,12 +58,29 @@ const Header = () => {
       </h1>
       {user && (
         <div className="flex p-2 justify-between">
+          {showGpt && (
+            <select
+              defaultValue={langKey}
+              onChange={handleLanguageChange}
+              className=" p-0.5  mb-2 mx-4 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800"
+            >
+              {SUPPORTED_LANG.map((lang) => (
+                <option
+                  key={lang.identifier}
+                  className="bg-black p-2 mt-5"
+                  value={lang.identifier}
+                >
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
           <button
             onClick={handleGptSearchClick}
-            class="relative flex items-center justify-center p-0.5  mb-2 mx-4 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800"
+            className="relative flex items-center justify-center p-0.5  mb-2 mx-4 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800"
           >
-            <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-              GPT Search
+            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+              {showGpt ? "HOMEPAGE" : "GptSearch"}
             </span>
           </button>
           <div className="flex">
