@@ -20,3 +20,5 @@ export const SUPPORTED_LANG = [
   { identifier: "french", name: "French" },
   { identifier: "spanish", name: "Spanish" },
 ];
+
+export const OPENAI_API = "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";

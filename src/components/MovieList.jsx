@@ -12,7 +12,6 @@ const MovieList = ({ title, movies }) => {
               key={movie.id}
               posterPath={movie.poster_path}
               movieTitle={movie.title}
-              vote={movie.vote_average}
             />
           ))}
         </div>
