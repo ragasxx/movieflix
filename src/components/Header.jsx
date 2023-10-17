@@ -52,7 +52,7 @@ const Header = () => {
   };
 
   return (
-    <div className="absolute w-screen z-20 px-5 py-2 bg-gradient-to-b from-black flex flex-col md:flex-row justify-between">
+    <div className="absolute w-screen z-20 px-5 py-2 bg-gradient-to-b from-black flex flex-row md:flex-row justify-between">
       <h1 className="font-sans font-bold text-3xl bg-gradient-to-r from-blue-400 to-white inline-block text-transparent bg-clip-text">
         Movieflix
       </h1>
@@ -89,10 +89,7 @@ const Header = () => {
               src={userIcon}
               alt="user icon"
             />
-            <button
-              onClick={handleSignOut}
-              className="font-bold  text-white hidden md:block"
-            >
+            <button onClick={handleSignOut} className="font-bold  text-white">
               Sign Out
             </button>
           </div>
